@@ -1,0 +1,147 @@
+﻿<Page
+    x:Class="UnoAnimationCompleteIssue.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UnoAnimationCompleteIssue"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:frameworkConverters="using:Vssl.VisualFramework.Shared.Converters"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <frameworkConverters:BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
+        <frameworkConverters:InverseBooleanConverter x:Key="inverseBooleanConverter" />
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Animation complete issue" Margin="20" FontSize="30" />
+            <StackPanel x:Name="ButtonStack" Orientation="Vertical" Margin="10" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <Button Padding="10" Click="StartXAML_Click"
+                            IsEnabled="{x:Bind VM.AnimationStarted, Converter={StaticResource inverseBooleanConverter}, Mode=OneWay}">
+                        <TextBlock x:Name="Button1Text" Text="Start XAML Animation" TextWrapping="WrapWholeWords" MaxWidth="90" />
+                    </Button>
+                    <Button Padding="10" Click="StartCode_Click" Margin="24,0,0,0"
+                            IsEnabled="{x:Bind VM.AnimationStarted, Converter={StaticResource inverseBooleanConverter}, Mode=OneWay}">
+                        <TextBlock x:Name="Button2Text" Text="Start Code Anmimation" TextWrapping="WrapWholeWords" MaxWidth="90" />
+                    </Button>
+                </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Padding="10" Click="StartCodeWithRotation_Click" Margin="24,0,0,0"
+                            IsEnabled="{x:Bind VM.AnimationStarted, Converter={StaticResource inverseBooleanConverter}, Mode=OneWay}">
+                        <TextBlock x:Name="Button3Text" Text="Start Code Anmimation with Rotation" TextWrapping="WrapWholeWords" MaxWidth="90" />
+                    </Button>
+                    <Button Padding="10" Click="StopCode_Click" Margin="24,0,0,0">
+                        <TextBlock x:Name="Button4Text" Text="Stop Code Anmimation" TextWrapping="WrapWholeWords" MaxWidth="90" />
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="20,16,20,0">
+                <TextBlock Text="Status:" />
+                <TextBlock Text="{x:Bind VM.Status, Mode=OneWay}" Margin="16,0,0,0" />
+            </StackPanel>
+        </StackPanel>
+
+        <Canvas Grid.Row="1" SizeChanged="OnSizeChanged">
+            <Ellipse x:Name="ball"
+                     Canvas.Left="60" Canvas.Top="40"
+                     Width="{x:Bind VM.Diameter, Mode=OneWay}"
+                     Height="{x:Bind VM.Diameter, Mode=OneWay}"
+                     Fill="Orange"
+                     Opacity="1" >
+                <Ellipse.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform x:Name="ballScaleTransform" ScaleX="1" ScaleY="1" />
+                        <TranslateTransform x:Name="ballTranslateTransform" X="0" Y="0" />
+                    </TransformGroup>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+
+            <Canvas Canvas.Left="65" Canvas.Top="80">
+                <Path x:Name="shape"
+                  Canvas.Left="-5" Canvas.Top="-15"
+                  Data="M 5 0 L 10 15 L 5 30 L 0 15 Z"
+                  Stroke="Black"
+                  StrokeThickness="1"
+                  Fill="Red"
+                  Opacity="1" >
+                </Path>
+                <Canvas.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform x:Name="shapeScaleTransform" ScaleX="1" ScaleY="1" />
+                        <TranslateTransform x:Name="shapeTranslateTransform" X="0" Y="0" />
+                        <RotateTransform x:Name="targetRotate" CenterX="0" CenterY="0" Angle="0" />
+                    </TransformGroup>
+                </Canvas.RenderTransform>
+            </Canvas>
+
+            <Path x:Name="AltAnimationPath" Data="{x:Bind VM.AltAnimationPath, Mode=OneWay}"
+                  Stroke="Gray"
+                  StrokeThickness="1"/>
+        </Canvas>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AnimationStates">
+                <VisualState x:Name="Pending" />
+                <VisualState x:Name="Impact">
+                    <Storyboard x:Name="movingAnimation" Duration="0:0:5">
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ball" Storyboard.TargetProperty="Opacity">
+                            <EasingDoubleKeyFrame KeyTime="0" Value="1.0" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:3" Value="0.5" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:5" Value="0.0" />
+                        </DoubleAnimationUsingKeyFrames>
+
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ballScaleTransform" Storyboard.TargetProperty="ScaleX">
+                            <EasingDoubleKeyFrame KeyTime="0" Value="1.0" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:5" Value="{x:Bind VM.Expansion, Mode=OneWay}" />
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ballScaleTransform" Storyboard.TargetProperty="ScaleY">
+                            <EasingDoubleKeyFrame KeyTime="0" Value="1.0" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:5" Value="{x:Bind VM.Expansion, Mode=OneWay}" />
+                        </DoubleAnimationUsingKeyFrames>
+                        
+                        <!--<DoubleAnimationUsingKeyFrames Storyboard.TargetName="ball" Storyboard.TargetProperty="(Canvas.Left)">
+                            <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:5" Value="{x:Bind VM.DriftX, Mode=OneWay}" />
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ball" Storyboard.TargetProperty="(Canvas.Top)">
+                            <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:5" Value="{x:Bind VM.DriftY, Mode=OneWay}" />
+                        </DoubleAnimationUsingKeyFrames>-->
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ballTranslateTransform" Storyboard.TargetProperty="X">
+                            <EasingDoubleKeyFrame KeyTime="0" Value="0.0" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:5" Value="{x:Bind VM.DriftX, Mode=OneWay}" />
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ballTranslateTransform" Storyboard.TargetProperty="Y">
+                            <EasingDoubleKeyFrame KeyTime="0" Value="0.0" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:5" Value="{x:Bind VM.DriftY, Mode=OneWay}" />
+                        </DoubleAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+
+            <VisualStateGroup x:Name="SizeAdaption">
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <!--VisualState to be triggered when window width is >=720 effective pixels.-->
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="Button1Text.MaxWidth" Value="150" />
+                        <Setter Target="Button2Text.MaxWidth" Value="150" />
+                        <Setter Target="Button3Text.MaxWidth" Value="150" />
+                        <Setter Target="Button4Text.MaxWidth" Value="150" />
+                        <Setter Target="ButtonStack.Orientation" Value="Horizontal" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+    </Grid>
+</Page>

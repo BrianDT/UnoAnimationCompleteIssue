@@ -1,0 +1,10 @@
+{
+  "profiles": {
+	"UnoAnimationCompleteIssue.Windows (Package)": {
+	  "commandName": "MsixPackage"
+	},
+	"UnoAnimationCompleteIssue.Windows (Unpackaged)": {
+	  "commandName": "Project"
+	}
+  }
+}

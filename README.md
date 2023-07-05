@@ -1,2 +1,28 @@
 # UnoAnimationCompleteIssue
-Reproduces a reported animation issue
+Reported as issue #12788
+Title:
+[iOS, Android] Keyframe animation of Rotation is not handled correctly
+
+Current behaviour:
+On iOS the animated object will be translated off screen at the end of the animation if the angle is not set to zero.
+
+On iOS the animation of rotation at the same time as translation does not require the animation of the CenterX and CenterY properties which is required on Windows.
+
+If the animation of the CenterX and CenterY properties are added on iOS then the storyboard completion event is never fired.
+
+Works correctly on Windows and WASM.
+
+Android has different problems which have been covered in other issues that need to be resolved however there is also a rotation problem in that including the animation of the CenterX and CenterY properties causes the target to be animated incorrectly.
+On Android the storyboard completion event is fired however the target moves back to its original location which is incorrect.
+
+Expected behaviour:
+The animation of Rotation on iOS should work the same as it does on Windows, code should not need to be removed for the animation to complete. 
+
+Reproduced in the sample at 
+https://github.com/BrianDT/UnoAnimationCompleteIssue
+
+In the sample the code to add the unnecessary final change to the rotation and to remove the animation of CentreX and CentreY is included using ifdefs. These can be adjusted to show the undesirable effects.
+
+Workarounds
+The inclusion of the final rotation to zero and the removal of the CenterX and CenterY animations on iOS bypass some of the issues. However, the inclusion of the unnecessary final change to the rotation can lead to inappropriate changes in the UI of the app which mean object positions are out of context.
+
