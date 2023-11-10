@@ -24,5 +24,27 @@ https://github.com/BrianDT/UnoAnimationCompleteIssue
 In the sample the code to add the unnecessary final change to the rotation and to remove the animation of CentreX and CentreY is included using ifdefs. These can be adjusted to show the undesirable effects.
 
 Workarounds
-The inclusion of the final rotation to zero and the removal of the CenterX and CenterY animations on iOS bypass some of the issues. However, the inclusion of the unnecessary final change to the rotation can lead to inappropriate changes in the UI of the app which mean object positions are out of context.
+The inclusion of the final rotation to zero and the removal of the CenterX and CenterY animations on iOS bypass some of the issues. 
+However, the inclusion of the unnecessary final change to the rotation can lead to inappropriate changes in the UI of the app which mean object positions are out of context.
+
+==================================================================================================================================================================================================================================================================================================================
+Reported issue #14382
+Title: [Android] programmatically started storybord animation cannot be stopped.
+
+Current behaviour:
+On Android the animation does not stop when storyboard.Stop(); is called.
+
+Works correctly on Windows, WASM and iOS.
+
+Expected behaviour:
+The animation should stop.
+
+Reproduced in the sample at 
+https://github.com/BrianDT/UnoAnimationCompleteIssue
+
+In the sample app start either of the code animations and then press the stop animation button.
+
+Workaround:
+None found
+
 

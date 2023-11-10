@@ -2,9 +2,9 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
-    <ActiveDebugFramework>net7.0-ios</ActiveDebugFramework>
-    <ActiveDebugProfile>Vssl16</ActiveDebugProfile>
-    <SelectedPlatformGroup>RemoteDevice</SelectedPlatformGroup>
+    <ActiveDebugFramework>net7.0-android</ActiveDebugFramework>
+    <ActiveDebugProfile>Xiaomi M2101K6G (Android 13.0 - API 33)</ActiveDebugProfile>
+    <SelectedPlatformGroup>PhysicalDevice</SelectedPlatformGroup>
     <DefaultDevice>iPhone 14 iOS 16.2</DefaultDevice>
     <DeveloperId>828L2Z4AP4</DeveloperId>
     <DevelopmentTeamId>828L2Z4AP4</DevelopmentTeamId>
@@ -19,7 +19,7 @@
 		&lt;key&gt;model&lt;/key&gt;
 		&lt;string&gt;iPad5,3&lt;/string&gt;
 		&lt;key&gt;os-version&lt;/key&gt;
-		&lt;string&gt;15.7.7&lt;/string&gt;
+		&lt;string&gt;15.7.9&lt;/string&gt;
 		&lt;key&gt;os&lt;/key&gt;
 		&lt;string&gt;iOS&lt;/string&gt;
 	&lt;/dict&gt;
@@ -30,6 +30,9 @@
   <PropertyGroup Condition="'$(TargetPlatformIdentifier)'=='iOS'">
     <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
     <PlatformTarget>arm64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <ItemGroup>
     <None Update="D:\Development\GitHub\UnoAnimationCompleteIssue\UnoAnimationCompleteIssue.Base\AppHead.xaml">

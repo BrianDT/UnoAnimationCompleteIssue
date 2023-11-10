@@ -23,20 +23,21 @@
             <StackPanel x:Name="ButtonStack" Orientation="Vertical" Margin="10" HorizontalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
                     <Button Padding="10" Click="StartXAML_Click"
-                            IsEnabled="{x:Bind VM.AnimationStarted, Converter={StaticResource inverseBooleanConverter}, Mode=OneWay}">
+                            IsEnabled="{x:Bind VM.XMLAnimationStarted, Converter={StaticResource inverseBooleanConverter}, Mode=OneWay}">
                         <TextBlock x:Name="Button1Text" Text="Start XAML Animation" TextWrapping="WrapWholeWords" MaxWidth="90" />
                     </Button>
                     <Button Padding="10" Click="StartCode_Click" Margin="24,0,0,0"
-                            IsEnabled="{x:Bind VM.AnimationStarted, Converter={StaticResource inverseBooleanConverter}, Mode=OneWay}">
+                            IsEnabled="{x:Bind VM.CodeAnimationStarted, Converter={StaticResource inverseBooleanConverter}, Mode=OneWay}">
                         <TextBlock x:Name="Button2Text" Text="Start Code Anmimation" TextWrapping="WrapWholeWords" MaxWidth="90" />
                     </Button>
                 </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Button Padding="10" Click="StartCodeWithRotation_Click" Margin="24,0,0,0"
-                            IsEnabled="{x:Bind VM.AnimationStarted, Converter={StaticResource inverseBooleanConverter}, Mode=OneWay}">
+                                IsEnabled="{x:Bind VM.CodeAnimationStarted, Converter={StaticResource inverseBooleanConverter}, Mode=OneWay}">
                         <TextBlock x:Name="Button3Text" Text="Start Code Anmimation with Rotation" TextWrapping="WrapWholeWords" MaxWidth="90" />
                     </Button>
-                    <Button Padding="10" Click="StopCode_Click" Margin="24,0,0,0">
+                    <Button Padding="10" Click="StopCode_Click" Margin="24,0,0,0"
+                            IsEnabled="{x:Bind VM.CodeAnimationStarted, Mode=OneWay}">
                         <TextBlock x:Name="Button4Text" Text="Stop Code Anmimation" TextWrapping="WrapWholeWords" MaxWidth="90" />
                     </Button>
                 </StackPanel>

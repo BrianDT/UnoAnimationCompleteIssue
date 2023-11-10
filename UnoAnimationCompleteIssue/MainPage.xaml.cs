@@ -35,7 +35,7 @@ namespace UnoAnimationCompleteIssue
             this.InitializeComponent();
             this.DataContext = new MainViewModel();
             this.VM.PropertyChanged += this.OnViewModelPropertyChanged;
-            this.movingAnimation.Completed += this.OnAnimationCompleted;
+            this.movingAnimation.Completed += this.OnXMLAnimationCompleted;
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace UnoAnimationCompleteIssue
         private void StartCode_Click(object sender, RoutedEventArgs e)
         {
             this.CreateDynamicAnimation(withRotation: false);
-            this.VM.Animate(triggerAnimation: false);
+            this.VM.Animating();
         }
 
         /// <summary>
@@ -78,17 +78,19 @@ namespace UnoAnimationCompleteIssue
         private void StartCodeWithRotation_Click(object sender, RoutedEventArgs e)
         {
             this.CreateDynamicAnimation(withRotation: true);
-            this.VM.Animate(triggerAnimation: false);
+            this.VM.Animating();
         }
 
         private void StopCode_Click(object sender, RoutedEventArgs e)
         {
             if (this.storyboard != null)
             {
-                this.storyboard.Completed -= this.OnAnimationCompleted;
+                this.storyboard.Completed -= this.OnCodeAnimationCompleted;
                 this.storyboard.Stop();
                 this.storyboard = null;
             }
+
+            this.VM.CodeAnimationAborted();
         }
 
         /// <summary>
@@ -115,11 +117,25 @@ namespace UnoAnimationCompleteIssue
         /// </summary>
         /// <param name="sender">The sender</param>
         /// <param name="args">The event args</param>
-        private void OnAnimationCompleted(object sender, object args)
+        private void OnXMLAnimationCompleted(object sender, object args)
         {
-            if (this.VM != null && this.VM.AnimationStarted)
+            if (this.VM != null)
             {
-                this.VM.AnimationCompleted();
+                this.VM.XMLAnimationCompleted();
+            }
+        }
+
+        /// <summary>
+        /// The event handler for animation completion
+        /// </summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="args">The event args</param>
+        private void OnCodeAnimationCompleted(object sender, object args)
+        {
+            this.storyboard.Completed -= this.OnCodeAnimationCompleted;
+            if (this.VM != null)
+            {
+                this.VM.CodeAnimationCompleted();
             }
         }
 
@@ -157,7 +173,7 @@ namespace UnoAnimationCompleteIssue
         private void CreateDynamicAnimation(bool withRotation = true)
         {
             this.storyboard = new Storyboard();
-            this.storyboard.Completed += this.OnAnimationCompleted;
+            this.storyboard.Completed += this.OnCodeAnimationCompleted;
             var translateAnimationX = new DoubleAnimationUsingKeyFrames();
             translateAnimationX.KeyFrames.Add(new DiscreteDoubleKeyFrame() { KeyTime = KeyTime.FromTimeSpan(TimeSpan.Zero), Value = 0 });
             translateAnimationX.KeyFrames.Add(new LinearDoubleKeyFrame() { KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(2)), Value = 0.1 * this.canvasWidth });
@@ -214,6 +230,17 @@ namespace UnoAnimationCompleteIssue
                 Storyboard.SetTarget(translateAnimationCY, this.targetRotate);
                 Storyboard.SetTargetProperty(translateAnimationCY, "CenterY");
 #endif
+            }
+            else
+            {
+                if (!this.VM.LastCodeAnimationTerminated)
+                {
+                    var translateAnimationA = new DoubleAnimationUsingKeyFrames();
+                    translateAnimationA.KeyFrames.Add(new DiscreteDoubleKeyFrame() { KeyTime = KeyTime.FromTimeSpan(TimeSpan.Zero), Value = 0 });
+                    this.storyboard.Children.Add(translateAnimationA);
+                    Storyboard.SetTarget(translateAnimationA, this.targetRotate);
+                    Storyboard.SetTargetProperty(translateAnimationA, "Angle");
+                }
             }
 
             this.storyboard.Begin();

@@ -28,9 +28,19 @@ namespace UnoAnimationCompleteIssue
         }
 
         /// <summary>
-        /// Gets a value indicating whether the animation has started
+        /// Gets a value indicating whether the XML based animation has started
         /// </summary>
-        public bool AnimationStarted { get; private set; }
+        public bool XMLAnimationStarted { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the code based animation has started
+        /// </summary>
+        public bool CodeAnimationStarted { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the code based animation has been terminated.
+        /// </summary>
+        public bool LastCodeAnimationTerminated { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether the animation should be triggered.
@@ -74,34 +84,70 @@ namespace UnoAnimationCompleteIssue
         /// <summary>
         /// Start the animation
         /// </summary>
-        /// <param name="triggerAnimation">A value indicating whether the animation should be triggered</param>
-        public void Animate(bool triggerAnimation = true)
+        public void Animate()
         {
-            this.AnimationStarted = true;
-            this.OnPropertyChanged(nameof(this.AnimationStarted));
+            this.XMLAnimationStarted = true;
+            this.OnPropertyChanged(nameof(this.XMLAnimationStarted));
             this.Status = "Started";
             this.OnPropertyChanged(nameof(this.Status));
-            if (triggerAnimation)
+            this.AnimationRequested = true;
+            this.OnPropertyChanged(nameof(this.AnimationRequested));
+        }
+
+        /// <summary>
+        /// Start the animation
+        /// </summary>
+        public void Animating()
+        {
+            this.LastCodeAnimationTerminated = false;
+            this.OnPropertyChanged(nameof(this.LastCodeAnimationTerminated));
+            this.CodeAnimationStarted = true;
+            this.OnPropertyChanged(nameof(this.CodeAnimationStarted));
+            this.Status = "Started";
+            this.OnPropertyChanged(nameof(this.Status));
+        }
+
+        /// <summary>
+        /// The UI notifies that the animation has completed
+        /// </summary>
+        public void XMLAnimationCompleted()
+        {
+            if (this.XMLAnimationStarted)
             {
-                this.AnimationRequested = true;
-                this.OnPropertyChanged(nameof(this.AnimationRequested));
+                this.XMLAnimationStarted = false;
+                this.OnPropertyChanged(nameof(this.XMLAnimationStarted));
+                this.Status = "Completed";
+                this.OnPropertyChanged(nameof(this.Status));
+                if (this.AnimationRequested)
+                {
+                    this.AnimationRequested = false;
+                    this.OnPropertyChanged(nameof(this.AnimationRequested));
+                }
             }
         }
 
         /// <summary>
         /// The UI notifies that the animation has completed
         /// </summary>
-        public void AnimationCompleted()
+        public void CodeAnimationCompleted()
         {
-            this.AnimationStarted = false;
-            this.OnPropertyChanged(nameof(this.AnimationStarted));
-            this.Status = "Completed";
-            this.OnPropertyChanged(nameof(this.Status));
-            if (this.AnimationRequested)
+            if (this.CodeAnimationStarted)
             {
-                this.AnimationRequested = false;
-                this.OnPropertyChanged(nameof(this.AnimationRequested));
+                this.CodeAnimationStarted = false;
+                this.OnPropertyChanged(nameof(this.CodeAnimationStarted));
+                this.Status = "Completed";
+                this.OnPropertyChanged(nameof(this.Status));
             }
+        }
+
+        /// <summary>
+        /// The UI notifies that the code animation has been aborted.
+        /// </summary>
+        public void CodeAnimationAborted()
+        {
+            this.LastCodeAnimationTerminated = true;
+            this.OnPropertyChanged(nameof(this.LastCodeAnimationTerminated));
+            this.CodeAnimationCompleted();
         }
 
         /// <summary>
