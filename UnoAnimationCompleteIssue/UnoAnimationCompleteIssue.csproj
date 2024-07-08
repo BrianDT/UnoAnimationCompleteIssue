@@ -5,14 +5,14 @@
 			net8.0-ios;
 			net8.0-maccatalyst;
 			net8.0-windows10.0.19041;
-			net8.0;
 			net8.0-browserwasm;
 		</TargetFrameworks>
 
 		<OutputType>Exe</OutputType>
 		<UnoSingleProject>true</UnoSingleProject>
 		<CodeAnalysisRuleSet>..\Vssl.ruleset</CodeAnalysisRuleSet>
-		
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+
 		<!-- Display name -->
 		<ApplicationTitle>UnoAnimationCompleteIssue</ApplicationTitle>
 		<!-- App Identifier -->
@@ -33,8 +33,11 @@
 		<!-- <WindowsSdkPackageVersion>10.0.22621.28</WindowsSdkPackageVersion> -->
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)'=='Debug' or '$(IsUiAutomationMappingEnabled)'=='True'">
-		<IsUiAutomationMappingEnabled>True</IsUiAutomationMappingEnabled>
-		<DefineConstants>$(DefineConstants);USE_UITESTS</DefineConstants>
-	</PropertyGroup>
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
+		<PackageReference Include="StyleCop.Analyzers">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
 </Project>

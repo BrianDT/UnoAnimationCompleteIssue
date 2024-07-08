@@ -1,9 +1,16 @@
+// <copyright file=Main.iOS.cs" company="Visual Software Systems Ltd.">Copyright (c) 2023 - 2024 All rights reserved</copyright>
+namespace UnoAnimationCompleteIssue.iOS;
 using UIKit;
 
-namespace UnoAnimationCompleteIssue.iOS;
+/// <summary>
+/// The entry point for the iOS head.
+/// </summary>
 public class EntryPoint
 {
-    // This is the main entry point of the application.
+    /// <summary>
+    /// This is the main entry point of the application.
+    /// </summary>
+    /// <param name="args">Any arguiments</param>
     public static void Main(string[] args)
     {
         // if you want to use a different Application Delegate class from "AppDelegate"

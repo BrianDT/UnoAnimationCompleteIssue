@@ -1,3 +1,6 @@
+// <copyright file=Main.Android.cs" company="Visual Software Systems Ltd.">Copyright (c) 2023 - 2024 All rights reserved</copyright>
+namespace UnoAnimationCompleteIssue.Droid;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +14,9 @@ using Android.Widget;
 using Com.Nostra13.Universalimageloader.Core;
 using Microsoft.UI.Xaml.Media;
 
-namespace UnoAnimationCompleteIssue.Droid;
+/// <summary>
+/// The entry point for the Android head.
+/// </summary>
 [global::Android.App.ApplicationAttribute(
     Label = "@string/ApplicationName",
     Icon = "@mipmap/icon",

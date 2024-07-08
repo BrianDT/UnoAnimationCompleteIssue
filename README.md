@@ -47,4 +47,6 @@ In the sample app start either of the code animations and then press the stop an
 Workaround:
 None found
 
+Updated to Uno 5.2.175
+Still an issue
 
