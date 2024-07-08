@@ -48,5 +48,6 @@ Workaround:
 None found
 
 Updated to Uno 5.2.175
-Still an issue
+#14382 Still an issue
+#12788 Still an issue - workarounds commented out in sample.
 

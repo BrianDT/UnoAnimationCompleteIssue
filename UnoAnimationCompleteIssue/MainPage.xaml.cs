@@ -203,13 +203,13 @@ namespace UnoAnimationCompleteIssue
                 translateAnimationA.KeyFrames.Add(new LinearDoubleKeyFrame() { KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(6)), Value = 360 });
                 translateAnimationA.KeyFrames.Add(new DiscreteDoubleKeyFrame() { KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(6.001)), Value = 0 });
                 translateAnimationA.KeyFrames.Add(new LinearDoubleKeyFrame() { KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(8)), Value = 90 });
-#if __IOS__
-                translateAnimationA.KeyFrames.Add(new LinearDoubleKeyFrame() { KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(8.1)), Value = 0 });
-#endif
+////#if __IOS__
+////                translateAnimationA.KeyFrames.Add(new LinearDoubleKeyFrame() { KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(8.1)), Value = 0 });
+////#endif
                 this.storyboard.Children.Add(translateAnimationA);
                 Storyboard.SetTarget(translateAnimationA, this.targetRotate);
                 Storyboard.SetTargetProperty(translateAnimationA, "Angle");
-#if !__IOS__ && !ANDROID
+////#if !__IOS__ && !ANDROID
                 var translateAnimationCX = new DoubleAnimationUsingKeyFrames();
                 translateAnimationCX.KeyFrames.Add(new DiscreteDoubleKeyFrame() { KeyTime = KeyTime.FromTimeSpan(TimeSpan.Zero), Value = 0 });
                 translateAnimationCX.KeyFrames.Add(new LinearDoubleKeyFrame() { KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(2)), Value = 0.1 * this.canvasWidth });
@@ -229,7 +229,7 @@ namespace UnoAnimationCompleteIssue
                 this.storyboard.Children.Add(translateAnimationCY);
                 Storyboard.SetTarget(translateAnimationCY, this.targetRotate);
                 Storyboard.SetTargetProperty(translateAnimationCY, "CenterY");
-#endif
+////#endif
             }
             else
             {

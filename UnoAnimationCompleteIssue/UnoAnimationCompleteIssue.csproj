@@ -33,6 +33,12 @@
 		<!-- <WindowsSdkPackageVersion>10.0.22621.28</WindowsSdkPackageVersion> -->
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
+		<CodesignKey>Apple Development: Created via API (828L2Z4AP4)</CodesignKey>
+		<CodesignProvision>VSSL Wildcard</CodesignProvision>
+		<ProvisioningType>manual</ProvisioningType>
+	</PropertyGroup>
+
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
 		<PackageReference Include="StyleCop.Analyzers">
 			<PrivateAssets>all</PrivateAssets>
