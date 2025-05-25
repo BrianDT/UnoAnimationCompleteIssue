@@ -51,3 +51,6 @@ Updated to Uno 5.2.175
 #14382 Still an issue
 #12788 Still an issue - workarounds commented out in sample.
 
+Updated to Uno 6.0.96
+#14382 Still an issue
+
