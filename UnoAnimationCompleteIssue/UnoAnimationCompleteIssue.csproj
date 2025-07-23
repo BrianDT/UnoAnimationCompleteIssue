@@ -1,12 +1,6 @@
 ﻿<Project Sdk="Uno.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>
-			net9.0-android;
-			net9.0-ios;
-			net9.0-maccatalyst;
-			net9.0-windows10.0.19041;
-			net9.0-browserwasm;
-		</TargetFrameworks>
+		<TargetFrameworks>net9.0-android;net9.0-ios;net9.0-windows10.0.26100;net9.0-browserwasm</TargetFrameworks>
 
 		<OutputType>Exe</OutputType>
 		<UnoSingleProject>true</UnoSingleProject>
@@ -31,6 +25,9 @@
       must be the highest found in https://www.nuget.org/packages/Microsoft.Windows.SDK.NET.Ref.
     -->
 		<!-- <WindowsSdkPackageVersion>10.0.22621.28</WindowsSdkPackageVersion> -->
+		<UnoFeatures>
+			SkiaRenderer;
+		</UnoFeatures>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)'=='net9.0-ios'">

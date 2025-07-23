@@ -70,7 +70,7 @@ namespace UnoAnimationCompleteIssue
         /// <summary>
         /// Gets the animation status
         /// </summary>
-        public string Status { get; private set; }
+        public string? Status { get; private set; }
 
         /// <summary>
         /// Gets the alternative animation path data

@@ -27,7 +27,7 @@ public partial class App : Application
     /// <summary>
     /// Gets the main window of the app.
     /// </summary>
-    protected Window MainWindow { get; private set; }
+    protected Window? MainWindow { get; private set; }
 
     /// <summary>
     /// Configures global Uno Platform logging
@@ -47,6 +47,9 @@ public partial class App : Application
             builder.AddProvider(new global::Uno.Extensions.Logging.WebAssembly.WebAssemblyConsoleLoggerProvider());
 #elif __IOS__ || __MACCATALYST__
             builder.AddProvider(new global::Uno.Extensions.Logging.OSLogLoggerProvider());
+
+            // Log to the Visual Studio Debug console
+            builder.AddConsole();
 #else
             builder.AddConsole();
 #endif
@@ -104,7 +107,7 @@ public partial class App : Application
     {
         this.MainWindow = new Window();
 #if DEBUG
-        this.MainWindow.EnableHotReload();
+        this.MainWindow.UseStudio();
 #endif
 
         // Do not repeat app initialization when the Window already has content,

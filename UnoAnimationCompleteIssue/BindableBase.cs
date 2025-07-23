@@ -20,7 +20,7 @@ namespace Vssl.VisualFramework.Common
         /// <summary>
         /// Multicast event for property change notifications.
         /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         #endregion
 
@@ -55,7 +55,7 @@ namespace Vssl.VisualFramework.Common
         /// support CallerMemberName.</param>
         /// <returns>True if the value was changed, false if the existing value matched the
         /// desired value.</returns>
-        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
+        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string? propertyName = null)
         {
             if (object.Equals(storage, value))
             {
@@ -73,22 +73,9 @@ namespace Vssl.VisualFramework.Common
         /// <param name="propertyName">Name of the property used to notify listeners.  This
         /// value is optional and can be provided automatically when invoked from compilers
         /// that support <see cref="CallerMemberNameAttribute"/>.</param>
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
-            var eventHandler = this.PropertyChanged;
-            if (eventHandler != null)
-            {
-                try
-                {
-                    eventHandler(this, new PropertyChangedEventArgs(propertyName));
-                }
-                catch (Exception ex)
-                {
-#if DEBUG
-                    Debug.WriteLine(string.Format("Exception {0}", ex.Message));
-#endif
-                }
-            }
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion

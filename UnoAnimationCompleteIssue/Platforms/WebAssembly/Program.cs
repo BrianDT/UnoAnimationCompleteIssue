@@ -1,4 +1,7 @@
 // <copyright file="Program.cs" company="Visual Software Systems Ltd.">Copyright (c) 2023 - 2024 All rights reserved</copyright>
+using System.Threading.Tasks;
+using Uno.UI.Hosting;
+
 namespace UnoAnimationCompleteIssue;
 
 /// <summary>
@@ -6,17 +9,20 @@ namespace UnoAnimationCompleteIssue;
 /// </summary>
 public class Program
 {
-    private static App _app;
-
     /// <summary>
     /// The main function entry point.
     /// </summary>
     /// <param name="args">Any arguiments</param>
     /// <returns>The return code</returns>
-    public static int Main(string[] args)
+    public static async Task Main(string[] args)
     {
-        Microsoft.UI.Xaml.Application.Start(_ => _app = new App());
+        App.InitializeLogging();
 
-        return 0;
+        var host = UnoPlatformHostBuilder.Create()
+            .App(() => new App())
+            .UseWebAssembly()
+            .Build();
+
+        await host.RunAsync();
     }
 }

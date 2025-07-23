@@ -54,3 +54,5 @@ Updated to Uno 5.2.175
 Updated to Uno 6.0.96
 #14382 Still an issue
 
+Updated to Uno 6.1.23 with SkiaRenderer
+Confirmed resolved

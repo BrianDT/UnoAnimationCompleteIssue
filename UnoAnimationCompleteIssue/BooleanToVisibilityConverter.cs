@@ -27,7 +27,7 @@ namespace Vssl.VisualFramework.Shared.Converters
         /// <returns>The converted value</returns>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            string mode = null;
+            string? mode = null;
             if (parameter != null)
             {
                 mode = parameter as string;

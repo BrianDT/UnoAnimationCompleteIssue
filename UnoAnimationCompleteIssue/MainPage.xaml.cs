@@ -16,7 +16,7 @@ namespace UnoAnimationCompleteIssue
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private Storyboard storyboard;
+        private Storyboard? storyboard;
 
         private double canvasHeight;
 
@@ -25,7 +25,7 @@ namespace UnoAnimationCompleteIssue
         /// <summary>
         /// The current visual state
         /// </summary>
-        private string currentState;
+        private string? currentState;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainPage"/> class
@@ -98,7 +98,7 @@ namespace UnoAnimationCompleteIssue
         /// </summary>
         /// <param name="sender">The sender</param>
         /// <param name="e">The event args</param>
-        private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
@@ -117,7 +117,7 @@ namespace UnoAnimationCompleteIssue
         /// </summary>
         /// <param name="sender">The sender</param>
         /// <param name="args">The event args</param>
-        private void OnXMLAnimationCompleted(object sender, object args)
+        private void OnXMLAnimationCompleted(object? sender, object args)
         {
             if (this.VM != null)
             {
@@ -130,9 +130,13 @@ namespace UnoAnimationCompleteIssue
         /// </summary>
         /// <param name="sender">The sender</param>
         /// <param name="args">The event args</param>
-        private void OnCodeAnimationCompleted(object sender, object args)
+        private void OnCodeAnimationCompleted(object? sender, object? args)
         {
-            this.storyboard.Completed -= this.OnCodeAnimationCompleted;
+            if (this.storyboard != null)
+            {
+                this.storyboard.Completed -= this.OnCodeAnimationCompleted;
+            }
+
             if (this.VM != null)
             {
                 this.VM.CodeAnimationCompleted();
