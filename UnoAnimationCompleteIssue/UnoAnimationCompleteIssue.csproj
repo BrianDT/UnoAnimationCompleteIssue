@@ -32,8 +32,8 @@
 
 	<PropertyGroup Condition="'$(TargetFramework)'=='net9.0-ios'">
 		<CodesignKey>Apple Development: Created via API (828L2Z4AP4)</CodesignKey>
-		<CodesignProvision>VSSL Wildcard</CodesignProvision>
-		<ProvisioningType>manual</ProvisioningType>
+		<CodesignProvision>VS: WildCard Development</CodesignProvision>
+		<ProvisioningType>automatic</ProvisioningType>
 	</PropertyGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
